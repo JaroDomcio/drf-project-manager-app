@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    members = models.ManyToManyField(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_projects')
+    members = models.ManyToManyField(User, related_name='member_projects')
 
     def __str__(self):
         return self.title
@@ -21,7 +21,7 @@ class Task(models.Model):
     description = models.TextField(max_length=500)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.TO_DO)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.TO_DO)
     deadline = models.DateField(null=True, blank=True)
 
     def __str__(self):
