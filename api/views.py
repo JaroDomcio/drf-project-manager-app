@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions,generics
 from .models import User, Project, Task, Comment
 from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer
 
@@ -24,3 +24,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     lookup_field = "id"
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny] # każdy ma dostęp do tego endpointu/nie wymaga tokena
