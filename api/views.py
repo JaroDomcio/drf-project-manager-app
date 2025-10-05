@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions,generics
+from rest_framework import viewsets, permissions, generics
 from .models import User, Project, Task, Comment
 from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer
 
@@ -25,6 +25,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     lookup_field = "id"
 
+#Widok rejestracji
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

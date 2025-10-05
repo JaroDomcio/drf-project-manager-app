@@ -1,5 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    class Role(models.TextChoices):
+        MANAGER = 'MANAGER','Manager', # pierwszy to string to klucz w bazie danych a drugi to etykieta
+        WORKER = 'WORKER','Worker'
+
+
+    role = models.CharField(max_length=50, choices=Role.choices, default=Role.WORKER)
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
