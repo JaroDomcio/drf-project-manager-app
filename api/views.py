@@ -1,4 +1,6 @@
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions, generics, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from .models import User, Project, Task, Comment
 from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer
 
@@ -7,6 +9,11 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     lookup_field = "id"
 
+    @action(detail=False, methods=['GET'], url_path='unassigned')
+    def unassigned(self, request):
+        users = User.objects.filter(task__isnull=True)
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
