@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['GET']) # Nie jest nam potrzebny url_path jak wyżej ponieważ django samemu generuje url na podstawie nazwy metody
+    @action(detail=True, methods=['GET']) # Nie jest nam potrzebny url_path jak wyżej ponieważ django samemu generuje url na podstawie nazwy metody
     def tasks(self,request, id):
         user = User.objects.get(id=id)
         tasks = user.tasks.all()
