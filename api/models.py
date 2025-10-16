@@ -36,6 +36,18 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+    def get_number_of_todo_tasks(self):
+        number_of_tasks = self.objects.filter(status='TO_DO').count()
+        return number_of_tasks
+
+    def get_number_of_done_tasks(self):
+        number_of_tasks = self.objects.filter(status='DONE').count()
+        return number_of_tasks
+
+    def get_number_of_in_progress_tasks(self):
+        number_of_tasks = self.objects.filter(status='IN_PROGRESS').count()
+        return number_of_tasks
+
 class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
