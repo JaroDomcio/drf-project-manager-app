@@ -46,7 +46,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def members(self,request,id):
         project = Project.objects.get(id=id)
         members = project.members.all()
-        serializer = ProjectSerializer(members, many=True)
+        serializer = UserSerializer(members, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['GET'], url_path='tasks-status')
