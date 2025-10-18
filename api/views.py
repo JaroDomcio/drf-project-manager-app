@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import viewsets, permissions, generics, status, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import User, Project, Task, Comment
@@ -8,49 +8,29 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = "id"
-
-    @action(detail=False, methods=['GET'], url_path='unassigned')
-    def unassigned(self, request):
-        users = User.objects.filter(task__isnull=True)
-        serializer = self.get_serializer(users, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=True, methods=['GET']) # Nie jest nam potrzebny url_path jak wyżej ponieważ django samemu generuje url na podstawie nazwy metody
-    def tasks(self,request, id):
-        user = User.objects.get(id=id)
-        tasks = user.tasks.all()
-        serializer = TaskSerializer(tasks, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=True, methods=['GET'])
-    def projects(self, request, id):
-        user = User.objects.get(id=id)
-        projects = user.member_projects.all()
-        serializer = ProjectSerializer(projects, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['role']
+    search_fields = ['first_name', 'last_name', 'email']
+    ordering_fields = ['last_name','email']
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     lookup_field = "id"
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['owner', 'members']
+    search_fields = ['title', 'description']
+    ordering_fields = ['title']
 
     @action(detail=True, methods=['GET'])
-    def tasks(self,request,id):
-        project = Project.objects.get(id=id)
-        tasks = project.tasks.all()
-        serializer = TaskSerializer(tasks, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @action(detail=True, methods=['GET'])
-    def members(self,request,id):
+    def members(self, request, id):
         project = Project.objects.get(id=id)
         members = project.members.all()
         serializer = UserSerializer(members, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['GET'], url_path='tasks-status')
-    def tasks_status(self,request,id):
+    def tasks_status(self, request, id):
         project = Project.objects.get(id=id)
         tasks_to_do = project.get_number_of_todo_tasks()
         done_tasks = project.get_number_of_done_tasks()
@@ -62,12 +42,19 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     lookup_field = "id"
-
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['status', 'assigned_to', 'project']
+    search_fields = ['title', 'description']
+    ordering_fields = ['deadline', 'status', 'title']
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     lookup_field = "id"
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['task', 'author']
+    search_fields = ['content']
+    ordering_fields = ['created_at']
 
 #Widok rejestracji
 class RegisterView(generics.CreateAPIView):
