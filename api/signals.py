@@ -12,4 +12,4 @@ def create_task_notification(sender, instance, created, **kwargs):
     else:
         message= f"Zaktualizowano zadanie :{instance.title}"
 
-    Notification.objects.create(user=instance.assignet_to, message=message)
+    Notification.objects.create(user=instance.assigned_to, message=message)

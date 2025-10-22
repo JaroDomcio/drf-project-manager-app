@@ -68,5 +68,5 @@ class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
 
     def get_queryset(self):
-        return Notification.objects.fliter(user=self.request.user)
+        return Notification.objects.filter(user=self.request.user)
 
