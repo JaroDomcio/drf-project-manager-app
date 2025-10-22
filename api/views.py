@@ -1,8 +1,9 @@
 from rest_framework import viewsets, permissions, generics, status, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .models import User, Project, Task, Comment
-from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer
+from .models import User, Project, Task, Comment, Notification
+from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer, NotificationSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -61,3 +62,11 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny] # każdy ma dostęp do tego endpointu/nie wymaga tokena
+
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        return Notification.objects.fliter(user=self.request.user)
+
