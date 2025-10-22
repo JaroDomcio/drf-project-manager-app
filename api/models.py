@@ -28,7 +28,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks_for_project')
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.TO_DO)
     deadline = models.DateField(null=True, blank=True)
@@ -47,6 +47,9 @@ class Task(models.Model):
     def get_number_of_in_progress_tasks(self):
         number_of_tasks = self.objects.filter(status='IN_PROGRESS').count()
         return number_of_tasks
+
+    def get_project_manager_id(self):
+        return self.project.owner
 
 class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)

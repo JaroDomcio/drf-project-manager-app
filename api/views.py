@@ -48,6 +48,14 @@ class TaskViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description']
     ordering_fields = ['deadline', 'status', 'title']
 
+    @action(detail=True, methods=['PATCH'], url_path='task-done')
+    def mark_task_done(self, request, id):
+        task = Task.objects.get(id=id)
+        task.status = 'DONE'
+        task.save()
+        return Response({'message': 'Task marked as done'}, status=status.HTTP_200_OK)
+
+
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
