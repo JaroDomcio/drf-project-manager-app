@@ -35,7 +35,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         project = Project.objects.get(id=id)
         tasks_to_do = project.get_number_of_todo_tasks()
         done_tasks = project.get_number_of_done_tasks()
-        tasks_in_progress = project.get_number_of_tasks_in_progress()
+        tasks_in_progress = project.get_number_of_in_progress_tasks()
         total_number_of_tasks = tasks_to_do + done_tasks + tasks_in_progress
         return Response({'tasks_todo':tasks_to_do, 'done_tasks': done_tasks, 'tasks_in_progress': tasks_in_progress, 'total_number_of_tasks': total_number_of_tasks})
 

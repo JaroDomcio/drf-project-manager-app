@@ -19,6 +19,18 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    def get_number_of_todo_tasks(self):
+        number_of_tasks = self.tasks_for_project.filter(status='TO_DO').count()
+        return number_of_tasks
+
+    def get_number_of_done_tasks(self):
+        number_of_tasks = self.tasks_for_project.filter(status='DONE').count()
+        return number_of_tasks
+
+    def get_number_of_in_progress_tasks(self):
+        number_of_tasks = self.tasks_for_project.filter(status='IN_PROGRESS').count()
+        return number_of_tasks
+
 class Task(models.Model):
 
     class Status(models.TextChoices):
@@ -36,19 +48,8 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
-    def get_number_of_todo_tasks(self):
-        number_of_tasks = self.objects.filter(status='TO_DO').count()
-        return number_of_tasks
 
-    def get_number_of_done_tasks(self):
-        number_of_tasks = self.objects.filter(status='DONE').count()
-        return number_of_tasks
-
-    def get_number_of_in_progress_tasks(self):
-        number_of_tasks = self.objects.filter(status='IN_PROGRESS').count()
-        return number_of_tasks
-
-    def get_project_manager_id(self):
+    def get_project_manager(self):
         return self.project.owner
 
 class Comment(models.Model):
