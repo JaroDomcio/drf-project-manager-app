@@ -31,6 +31,10 @@ class Project(models.Model):
         number_of_tasks = self.tasks_for_project.filter(status='IN_PROGRESS').count()
         return number_of_tasks
 
+    def get_members_without_tasks(self):
+        members_without_tasks = self.members.exclude(tasks__project=self)
+        return members_without_tasks
+
 class Task(models.Model):
 
     class Status(models.TextChoices):

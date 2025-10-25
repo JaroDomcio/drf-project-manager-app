@@ -39,6 +39,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
         total_number_of_tasks = tasks_to_do + done_tasks + tasks_in_progress
         return Response({'tasks_todo':tasks_to_do, 'done_tasks': done_tasks, 'tasks_in_progress': tasks_in_progress, 'total_number_of_tasks': total_number_of_tasks})
 
+    @action(detail=True, methods=['GET'], url_path='without-tasks')
+    def users_without_tasks(self, request,id):
+        project = Project.objects.get(id=id)
+        users = project.get_members_without_tasks()
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
