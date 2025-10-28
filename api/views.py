@@ -14,6 +14,12 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['first_name', 'last_name', 'email']
     ordering_fields = ['last_name','email']
 
+    @action(detail=False, methods=['GET'], url_path='unassigned')
+    def unassigned(self, request):
+        users = User.get_users_without_projects()
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer

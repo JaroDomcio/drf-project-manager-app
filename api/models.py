@@ -10,6 +10,10 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.WORKER)
 
+    @classmethod
+    def get_users_without_projects(cls):
+        return cls.objects.filter(member_projects__isnull=True).distinct()
+
 class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
