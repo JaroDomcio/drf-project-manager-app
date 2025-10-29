@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import User, Project, Task, Comment, Notification
 from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer, NotificationSerializer
-
+from permissions import *
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -14,6 +14,14 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['first_name', 'last_name', 'email']
     ordering_fields = ['last_name','email']
 
+    def get_permissions(self):
+        if self.action in ['update', 'partial_update','destroy']:
+            permission_classes = [permissions.IsAuthenticated,IsOwner]
+        elif self.action in ['unassigned']:
+            permission_classes = [IsManager]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
     @action(detail=False, methods=['GET'], url_path='unassigned')
     def unassigned(self, request):
         users = User.get_users_without_projects()
@@ -28,6 +36,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
     filterset_fields = ['owner', 'members']
     search_fields = ['title', 'description']
     ordering_fields = ['title']
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'destroy', 'partial_update','users_without_tasks']:
+            permission_classes = [IsManager]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     @action(detail=True, methods=['GET'])
     def members(self, request, id):
@@ -60,6 +75,15 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_fields = ['status', 'assigned_to', 'project']
     search_fields = ['title', 'description']
     ordering_fields = ['deadline', 'status', 'title']
+
+    def get_permissions(self):
+        if self.action in ['create','destroy']:
+            permission_classes = [IsManager]
+        elif self.action in ['mark_task_done']:
+            permission_classes = [IsTaskOwner]
+        else:
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     @action(detail=True, methods=['PATCH'], url_path='task-done')
     def mark_task_done(self, request, id):

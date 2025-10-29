@@ -29,3 +29,14 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
             return True
 
         return obj.author == request.user
+
+class IsOwner(permissions.BasePermission):
+    """
+    Allows access only to owners of an account
+    """
+    def has_object_permission(self, request, view, obj):
+        return obj == request.user
+
+class IsTaskOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.assigned_to == request.user
