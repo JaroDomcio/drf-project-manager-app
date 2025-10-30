@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import User, Project, Task, Comment, Notification
 from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer, NotificationSerializer
-from permissions import *
+from .permissions import *
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
