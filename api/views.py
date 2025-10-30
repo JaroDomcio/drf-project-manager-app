@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
     ordering_fields = ['last_name','email']
 
     def get_permissions(self):
-        if self.action in ['update', 'partial_update','destroy']:
+        if self.action in ['update', 'partial_update','destroy','my_stats']:
             permission_classes = [permissions.IsAuthenticated,IsOwner]
         elif self.action in ['unassigned']:
             permission_classes = [IsManager]
@@ -27,6 +27,18 @@ class UserViewSet(viewsets.ModelViewSet):
         users = User.get_users_without_projects()
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['GET'], url_path='my-stats')
+    def my_stats(self, request):
+        user = request.user
+        return Response({
+            'total_tasks': user.get_total_tasks(),
+            'completed_tasks': user.get_completed_tasks(),
+            'pending_tasks': user.get_pending_tasks(),
+            'in_progress_tasks': user.get_in_progress_tasks(),
+            'projects': user.get_projects_count(),
+            'owned_projects': user.get_owned_projects(),
+        })
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
@@ -79,11 +91,19 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['create','destroy']:
             permission_classes = [IsManager]
-        elif self.action in ['mark_task_done']:
+        elif self.action in ['mark_task_done','mark_task_in_progress']:
             permission_classes = [IsTaskOwner]
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+    @action(detail=True, methods=['PATCH'], url_path='task-in-progress')
+    def mark_task_in_progress(self, request, id):
+        task = Task.objects.get(id=id)
+        task.status = 'IN_PROGRESS'
+        task.save()
+        return Response({'message': 'Task marked as in progress'}, status=status.HTTP_200_OK)
+
 
     @action(detail=True, methods=['PATCH'], url_path='task-done')
     def mark_task_done(self, request, id):

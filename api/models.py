@@ -12,13 +12,31 @@ class User(AbstractUser):
 
     @classmethod
     def get_users_without_projects(cls):
-        return cls.objects.filter(member_projects__isnull=True).distinct()
+        return cls.objects.filter(project_member__isnull=True).distinct()
+
+    def get_total_tasks(self):
+        return self.tasks.count()
+
+    def get_completed_tasks(self):
+        return self.tasks.filter(status="DONE").count()
+
+    def get_pending_tasks(self):
+        return self.tasks.filter(status="TO_DO").count()
+
+    def get_in_progress_tasks(self):
+        return self.tasks.filter(status="IN_PROGRESS").count()
+
+    def get_projects_count(self):
+        return self.project_member.count()
+
+    def get_owned_projects(self):
+        return self.owned_projects.count() if hasattr(self, 'owned_projects') else 0
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_projects')
-    members = models.ManyToManyField(User, related_name='member_projects')
+    members = models.ManyToManyField(User, related_name='project_member')
 
     def __str__(self):
         return self.title
