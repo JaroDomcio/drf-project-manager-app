@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ function LoginForm() {
                 const data = await response.json();
                 localStorage.setItem('accessToken', data.access);
                 localStorage.setItem('refreshToken', data.refresh);
-                alert('Login successful!');
+                navigate('/');
             } else {
                 alert('Login failed. Please check your credentials.');
             }
@@ -34,21 +36,22 @@ function LoginForm() {
             <div>
                 <label>Username:</label>
                 <input
-                    type="text">
+                    type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                </input>
+                />
             </div>
                 <div>
                 <label>Password:</label>
                 <input
-                    type="password">
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                </input>
+                />
             </div>
+            <button type="submit">Login</button>
         </form>
     );
 

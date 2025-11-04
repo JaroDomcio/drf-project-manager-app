@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
 
 function App() {
   
@@ -9,11 +10,12 @@ function App() {
     <>
       <main>
         <Routes>
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
     </>
   )
 }
 
-export default App
+export default App;
