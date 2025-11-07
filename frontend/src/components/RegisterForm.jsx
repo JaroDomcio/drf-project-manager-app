@@ -22,9 +22,16 @@ function RegisterForm(){
             [field]: value,
         })
     };
- 
+    
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (form.password != form.password2){
+            alert("Passwords are not the same!")
+            return;
+        }
 
         try {
             const response = await fetch('http://127.0.0.1:8000/api/register/', {
