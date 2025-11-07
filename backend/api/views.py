@@ -22,6 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
+    
     @action(detail=False, methods=['GET'], url_path='unassigned')
     def unassigned(self, request):
         users = User.get_users_without_projects()
