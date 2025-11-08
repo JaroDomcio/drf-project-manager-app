@@ -134,7 +134,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny] # każdy ma dostęp do tego endpointu/nie wymaga tokena
+    permission_classes = [permissions.AllowAny] 
 
 
 class NotificationViewSet(viewsets.ModelViewSet):
