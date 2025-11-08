@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../css/loginRegisterForm.css'
 
 function LoginForm() {
@@ -55,6 +55,9 @@ function LoginForm() {
                 </div>
                 <button type="submit">Login</button>
             </form>
+            <p>
+                Don't have an account ? <Link to="/register">Register here</Link>
+            </p>
         </div>
     );
 

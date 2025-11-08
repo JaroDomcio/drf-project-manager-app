@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function RegisterForm(){
     const [form,setForm] = useState({
@@ -125,6 +125,9 @@ function RegisterForm(){
                 </div>
                 <button type="submit">Register</button>
             </form>
+            <p>
+                Already have an account ? <Link to="/login">Sign in here</Link>
+            </p>
         </div>
         );
     };

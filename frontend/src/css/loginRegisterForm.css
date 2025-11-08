@@ -27,7 +27,6 @@ button {
 }
 
 button:hover{
-    /* background-color: greenyellow; */
     background-color: #f4d1f1;
     transform: translate(0,2px);
 }
@@ -37,4 +36,14 @@ input{
     border: 2px solid #ccc;
     outline: 0;
     border-radius: 5px;
+}
+
+a {
+    text-decoration: none;  /* usuń podkreślenie */
+    color: #9370DB;  /* zmień kolor (np. fioletowy) */
+}
+
+
+a:hover {
+    color: #4B0082;  /* ciemniejszy kolor po najechaniu */
 }
