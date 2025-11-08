@@ -61,69 +61,71 @@ function RegisterForm(){
     };
 
     return (
-        <form onSubmit = {handleSubmit}>
-            <div>
-                <label>Username: </label>
-                <input
-                    name ="username"
-                    type = "text"
-                    value = {form.username}
-                    onChange = {handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>First name: </label>
-                <input
-                    name="first_name"
-                    type="text"
-                    value={form.first_name}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>Last name: </label>
-                <input
-                    name="last_name"
-                    type="text"
-                    value={form.last_name}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>email: </label>
-                <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>Password: </label>
-                <input
-                    name="password"
-                    type="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>Confirm your password: </label>
-                <input
-                    name="password2"
-                    type="password"
-                    value={form.password2}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <button type="submit">Register</button>
-        </form>
+        <div className="form-box">
+            <form onSubmit = {handleSubmit}>
+                <div>
+                    <label>Username: </label>
+                    <input
+                        name ="username"
+                        type = "text"
+                        value = {form.username}
+                        onChange = {handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>First name: </label>
+                    <input
+                        name="first_name"
+                        type="text"
+                        value={form.first_name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Last name: </label>
+                    <input
+                        name="last_name"
+                        type="text"
+                        value={form.last_name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>email: </label>
+                    <input
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Password: </label>
+                    <input
+                        name="password"
+                        type="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Confirm your password: </label>
+                    <input
+                        name="password2"
+                        type="password"
+                        value={form.password2}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
         );
     };
 

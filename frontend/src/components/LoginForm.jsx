@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/loginForm.css'
+import '../css/loginRegisterForm.css'
 
 function LoginForm() {
     const [username, setUsername] = useState('');
@@ -34,7 +34,6 @@ function LoginForm() {
     };
     return (
         <div className='form-box'>
-            <h2>Login Page</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username:</label>
