@@ -4,7 +4,7 @@ import '../css/navbar.css'
 function Navbar(){
     return(
         <div className="navbar">
-            <div className="navbar-logo">
+            <div className="navbar-home">
                 <Link to="/">Home</Link>
             </div>
             <div className="navbar-app-name">

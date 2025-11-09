@@ -15,7 +15,7 @@
 }
 
 
-button {
+.form-box button {
     border-radius: 22px;
     border: 2px solid #9370DB;
     margin-top: 5px;
@@ -26,12 +26,12 @@ button {
     box-shadow: 0 2px 8px rgba(52,73,94,0.08);
 }
 
-button:hover{
+.form-box button:hover{
     background-color: #f4d1f1;
     transform: translate(0,2px);
 }
 
-input{
+.form-box input{
     display: inline-block;
     margin: 10px;
     border: 2px solid #ccc;
@@ -40,18 +40,18 @@ input{
     border-radius: 5px;
 }
 
-label {
+.form-box label {
     display: block;
     font-weight: bold;
     width: 180px;
     margin-left: 45px;
 }
 
-a {
+.form-box a {
     text-decoration: none; 
     color: #9370DB;  
 }
 
-a:hover {
+.form-box a:hover {
     color: #4B0082; 
 }
