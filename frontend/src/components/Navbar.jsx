@@ -22,10 +22,10 @@ function Navbar(){
             <div className="navbar-home">
                 <Link to="/">Home</Link>
             </div>
-            <div className="navbar-app-name">
+            <div>
                 <span>Project Manager</span>
             </div>
-            <div className="navbar-logout">
+            <div>
                 <button onClick={handleLogout} >Logout</button>
             </div>
         </div>
