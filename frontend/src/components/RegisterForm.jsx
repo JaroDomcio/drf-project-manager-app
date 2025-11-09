@@ -64,7 +64,7 @@ function RegisterForm(){
         <div className="form-box">
             <form onSubmit = {handleSubmit}>
                 <div>
-                    <label>Username: </label>
+                    <label>Username</label>
                     <input
                         name ="username"
                         type = "text"
@@ -74,7 +74,7 @@ function RegisterForm(){
                     />
                 </div>
                 <div>
-                    <label>First name: </label>
+                    <label>First name</label>
                     <input
                         name="first_name"
                         type="text"
@@ -84,7 +84,7 @@ function RegisterForm(){
                     />
                 </div>
                 <div>
-                    <label>Last name: </label>
+                    <label>Last name</label>
                     <input
                         name="last_name"
                         type="text"
@@ -94,7 +94,7 @@ function RegisterForm(){
                     />
                 </div>
                 <div>
-                    <label>email: </label>
+                    <label>email</label>
                     <input
                         name="email"
                         type="email"
@@ -104,7 +104,7 @@ function RegisterForm(){
                     />
                 </div>
                 <div>
-                    <label>Password: </label>
+                    <label>Password</label>
                     <input
                         name="password"
                         type="password"
@@ -114,7 +114,7 @@ function RegisterForm(){
                     />
                 </div>
                 <div>
-                    <label>Confirm your password: </label>
+                    <label>Confirm your password</label>
                     <input
                         name="password2"
                         type="password"
