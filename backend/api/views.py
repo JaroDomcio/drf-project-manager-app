@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions, generics, status, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django.db.models import Q
 from .models import User, Project, Task, Comment, Notification
 from .serializers import UserSerializer, ProjectSerializer, TaskSerializer, CommentSerializer, NotificationSerializer
 from .permissions import *
@@ -56,6 +57,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
+    
+    def get_queryset(self):
+        user = self.request.user
+        users_projects = Project.objects.filter( Q(members=user) | Q(owner=user)).distinct()
+        return users_projects
 
     @action(detail=True, methods=['GET'])
     def members(self, request, id):
