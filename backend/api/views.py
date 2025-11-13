@@ -65,14 +65,14 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'])
     def members(self, request, id):
-        project = Project.objects.get(id=id)
+        project = self.get_object()
         members = project.members.all()
         serializer = UserSerializer(members, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['GET'], url_path='tasks-status')
     def tasks_status(self, request, id):
-        project = Project.objects.get(id=id)
+        project = self.get_object()
         tasks_to_do = project.get_number_of_todo_tasks()
         done_tasks = project.get_number_of_done_tasks()
         tasks_in_progress = project.get_number_of_in_progress_tasks()
@@ -81,7 +81,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'], url_path='without-tasks')
     def users_without_tasks(self, request,id):
-        project = Project.objects.get(id=id)
+        project = self.get_object()
         users = project.get_members_without_tasks()
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
