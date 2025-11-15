@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from django.db.models import Q
 from rest_framework import viewsets, permissions, status, filters
 from .models import Project
 from .serializers import ProjectSerializer
