@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api',
+    'comment',
+    'user',
+    'task',
+    'project',
+    'notifications',
     'django_filters',
     'drf_spectacular',
     'corsheaders',
@@ -154,4 +158,4 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'user.User'
