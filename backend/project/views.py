@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework import viewsets, permissions, status, filters
 from .models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, ProjectListSerializer
 from user.serializers import UserSerializer
 from rest_framework.decorators import action
 from user.permissions import IsManager
@@ -28,6 +28,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
         user = self.request.user
         users_projects = Project.objects.filter( Q(members=user) | Q(owner=user)).distinct()
         return users_projects
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProjectListSerializer
+        else:
+            return ProjectSerializer
 
     @action(detail=True, methods=['GET'])
     def members(self, request, id):
