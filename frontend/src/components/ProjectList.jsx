@@ -26,12 +26,14 @@ function ProjectList() {
     return(
     <div>
         <h1>Lista projektów</h1>
-        {projectList.map((project, index) => (
-            <li key = {project.id || index}>
-                {project.title}
-            </li>
-        )
-        )}
+        {projectList.length== 0 ? ("Brak projektów") : 
+            (
+                projectList.map((project, index) => (
+                <ul key = {project.id || index}>
+                    {project.title}
+                </ul>))
+            ) 
+        }
     </div>);
 }
 
