@@ -1,10 +1,14 @@
 import ProjectList from '../components/ProjectList.jsx'
+import '../css/home.css'
 
 function Home(){
     return (
     <div>
-        <h1>Home Page</h1>
-        <ProjectList /> 
+        <div className='project-list-container'>
+            <div className='project-list-box'>
+                <ProjectList />
+            </div>             
+        </div> 
     </div>);
 
 }

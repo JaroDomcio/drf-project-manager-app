@@ -29,9 +29,9 @@ function ProjectList() {
         {projectList.length== 0 ? ("Brak projektów") : 
             (
                 projectList.map((project, index) => (
-                <ul key = {project.id || index}>
+                <p key = {project.id || index}>
                     {project.title}
-                </ul>))
+                </p>))
             ) 
         }
     </div>);

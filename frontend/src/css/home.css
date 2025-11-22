@@ -1,0 +1,20 @@
+.project-list-container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.project-list-box {
+    border: 2px solid #9370DB;
+    border-radius:  10px;
+    padding: 1rem 2rem;
+    max-width: 200px;
+    text-align: center;
+
+}
+
+.project-list-box p {
+    border-bottom: 1px solid #9370DB;
+    margin-bottom: 20px;
+}
