@@ -5,6 +5,9 @@ function ProjectList() {
     const [projectList,setProjectList] = useState([])
     const [error, setError] = useState('')
 
+    const handleProjectClick = (e) => {
+        alert('Klik');
+    }
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -28,14 +31,15 @@ function ProjectList() {
         <h1>Lista projektów</h1>
         {projectList.length== 0 ? ("Brak projektów") : 
             (
-                projectList.map((project, index) => (
-                <div className='project-list-box-item'>
-                    <p key = {project.id || index}>
-                    {project.title}
+            projectList.map((project, index) => (
+                <div className='project-list-box-item' key = {project.id || index}>
+                    <h3 onClick={() => handleProjectClick(project.id)} className='project-title'>
+                        {project.title}
+                    </h3>
                     <p className='project-description'>
                         {project.description}
                     </p> 
-                    </p>
+                    
                 </div>    
                 ))
             ) 

@@ -23,3 +23,13 @@
     font-size: small;
     color: gray;
 } 
+
+.project-title {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.project-title:hover {
+    color: #9370DB;
+    transform: translate(0,2px);
+}
