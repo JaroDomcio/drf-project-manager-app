@@ -29,9 +29,15 @@ function ProjectList() {
         {projectList.length== 0 ? ("Brak projektów") : 
             (
                 projectList.map((project, index) => (
-                <p key = {project.id || index}>
+                <div className='project-list-box-item'>
+                    <p key = {project.id || index}>
                     {project.title}
-                </p>))
+                    <p className='project-description'>
+                        {project.description}
+                    </p> 
+                    </p>
+                </div>    
+                ))
             ) 
         }
     </div>);

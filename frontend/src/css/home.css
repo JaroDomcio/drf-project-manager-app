@@ -14,7 +14,12 @@
 
 }
 
-.project-list-box p {
+.project-list-box-item{
     border-bottom: 1px solid #9370DB;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
 }
+
+.project-description {
+    font-size: small;
+    color: gray;
+} 
