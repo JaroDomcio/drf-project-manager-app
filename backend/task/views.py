@@ -2,7 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions, status, filters
 from .models import Task
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, TaskListSerializer
+from django.db.models import Q
 from rest_framework.decorators import action
 from user.permissions import IsManager
 from task.permissions import IsTaskOwner
@@ -24,6 +25,17 @@ class TaskViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        user = self.request.user
+        users_tasks = Task.objects.filter( Q(assigned_to=user)).distinct()
+        return users_tasks
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskListSerializer
+        else:
+            return TaskSerializer
 
     @action(detail=True, methods=['PATCH'], url_path='task-in-progress')
     def mark_task_in_progress(self, request, id):

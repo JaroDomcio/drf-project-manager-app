@@ -1,17 +1,32 @@
+.home-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 250px; 
+    align-items: start; 
+
+    width: 100%;
+    min-height: 100vh; 
+}
+
 .project-list-container {
+    grid-column: 1;
     display: flex;
     justify-content: left;
     align-items: center;
     margin-top: 50px;
 }
 
-.project-list-box {
+.project-list-box, 
+.task-list-box {
     border: 2px solid #9370DB;
     border-radius:  10px;
     padding: 1rem 2rem;
     max-width: 200px;
     text-align: center;
+}
 
+.task-list-box{
+    max-width: 500px;
 }
 
 .project-list-box-item{
@@ -32,4 +47,19 @@
 .project-title:hover {
     color: #9370DB;
     transform: translate(0,2px);
+}
+
+.task-container {
+    grid-column: 2;
+    margin-top: 50px;
+    padding: 0 20px; 
+}
+
+.task-list-item{
+    border: 2px solid #9370DB;
+    border-radius:  10px;
+    padding: 1rem 2rem;
+    max-width: 500px;
+    text-align: center;
+    margin-top: 20px;
 }
