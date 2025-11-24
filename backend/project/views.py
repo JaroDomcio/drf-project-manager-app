@@ -7,6 +7,12 @@ from .serializers import ProjectSerializer, ProjectListSerializer
 from user.serializers import UserSerializer
 from rest_framework.decorators import action
 from user.permissions import IsManager
+from rest_framework.pagination import PageNumberPagination
+
+class ProjectPagination(PageNumberPagination):
+    page_size = 3
+    # page_size_query_param = 'page_size'
+    # max_page_size = 100
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
@@ -16,6 +22,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
     filterset_fields = ['owner', 'members']
     search_fields = ['title', 'description']
     ordering_fields = ['title']
+
+    pagination_class = ProjectPagination
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'destroy', 'partial_update','users_without_tasks']:

@@ -5,6 +5,9 @@ function ProjectList() {
     const [projectList,setProjectList] = useState([])
     const [error, setError] = useState('')
 
+    const[page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
     const handleProjectClick = (e) => {
         alert('Klik');
     }
@@ -12,9 +15,13 @@ function ProjectList() {
     useEffect(() => {
         const fetchProjects = async () => {
             try{
-                const response = await apiClient.get('projects/');
+                const response = await apiClient.get(`projects/?page=${page}`);
 
-                setProjectList(response.data);
+                setProjectList(response.data.results);
+
+                const totalPages = Math.ceil(response.data.count / 3); 
+                setTotalPages(totalPages);
+
                 setError('');
             }
             catch(err){
@@ -24,7 +31,19 @@ function ProjectList() {
         };
         fetchProjects(); 
     
-    }, []);
+    }, [page]);
+
+    const handleChangeToNextPage = () => {
+        if (page < totalPages){
+            setPage(page + 1);
+        }
+    }
+
+    const handleChangeToNextPrevious = () => {
+        if (page > 1){
+            setPage(page - 1);
+        }
+    }
 
     return(
     <div>
@@ -44,6 +63,21 @@ function ProjectList() {
                 ))
             ) 
         }
+        {totalPages > 1 ? (
+            <div className='pagination-buttons'>
+                <button onClick={handleChangeToNextPrevious} disabled={page === 1}>
+                    Poprzednia
+                </button>
+                
+                <span> Strona {page} z {totalPages} </span>
+                
+                <button onClick={handleChangeToNextPage} disabled={page === totalPages}>
+                    Następna
+                </button>
+            </div>
+        ) : (null)}
+
+        {error && <p className='error-message'>{error}</p>}
     </div>);
 }
 
