@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import apiClient from '../api/apiClient';
+import  '../css/pagination.css';
 
 function ProjectList() {
     const [projectList,setProjectList] = useState([])
@@ -39,14 +40,14 @@ function ProjectList() {
         }
     }
 
-    const handleChangeToNextPrevious = () => {
+    const handleChangeToPreviousPage = () => {
         if (page > 1){
             setPage(page - 1);
         }
     }
 
     return(
-    <div>
+    <div className = 'project-list-box'>
         <h1>Lista projektów</h1>
         {projectList.length== 0 ? ("Brak projektów") : 
             (
@@ -65,7 +66,7 @@ function ProjectList() {
         }
         {totalPages > 1 ? (
             <div className='pagination-buttons'>
-                <button onClick={handleChangeToNextPrevious} disabled={page === 1}>
+                <button onClick={handleChangeToPreviousPage} disabled={page === 1}>
                     Poprzednia
                 </button>
                 
@@ -77,7 +78,6 @@ function ProjectList() {
             </div>
         ) : (null)}
 
-        {error && <p className='error-message'>{error}</p>}
     </div>);
 }
 

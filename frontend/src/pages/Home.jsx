@@ -5,9 +5,7 @@ function Home(){
     return (
     <div>
         <div className='project-list-container'>
-            <div className='project-list-box'>
-                <ProjectList />
-            </div>             
+            <ProjectList />       
         </div> 
     </div>);
 
