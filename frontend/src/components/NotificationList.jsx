@@ -21,24 +21,51 @@ function NotificationList() {
         fetchNotifications();
     }, []);
 
+    const formatDate = (isoString) => {
+        const date = new Date(isoString);
+        return date.toLocaleString('pl-PL', { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+    };
 
-    return (
-    <div>
+
+return (
+    <div className='notification-list-box'> 
         <h1>Lista powiadomień</h1>
         {notifications.length === 0 ? (
-            <h1>Brak powiadomień</h1>
+            <p>Brak powiadomień</p> 
             ) : 
             (
                 notifications.map((notification, index) => (
-                <div className='notifications-list-box-item' key = {notification.id || index}>
-                    <h3 className='notification-body'>
-                        {notification.message}
-                    </h3>
+                <div className='notification-list-box-item' key={notification.id || index}>
+                    
+                    <div className="notification-content">
+                        <h3 className='notification-body'>
+                            {notification.message}
+                        </h3>
+                        <p className='notification-date'>
+                            {formatDate(notification.created_at)}
+                        </p>
+
+                    </div>
+                    <div 
+                        className="status-dot"
+                        style={{
+                            backgroundColor: notification.is_read ? '#32CD32' : '#FF4500' 
+                        }}
+                    />
+                    
                 </div>    
                 ))
             )}
+
     </div>
     );
 }
+
 
 export default NotificationList;
