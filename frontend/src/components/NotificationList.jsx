@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-
+import apiClient from '../api/apiClient';
 
 
 function NotificationList() {
@@ -26,17 +26,14 @@ function NotificationList() {
     <div>
         <h1>Lista powiadomień</h1>
         {notifications.length === 0 ? (
-            <h>Brak powiadomień</h>
+            <h1>Brak powiadomień</h1>
             ) : 
             (
-                projectList.map((project, index) => (
-                <div className='project-list-box-item' key = {project.id || index}>
-                    <h3 onClick={() => handleProjectClick(project.id)} className='project-title'>
-                        {project.title}
+                notifications.map((notification, index) => (
+                <div className='notifications-list-box-item' key = {notification.id || index}>
+                    <h3 className='notification-body'>
+                        {notification.message}
                     </h3>
-                    <p className='project-description'>
-                        {project.description}
-                    </p>
                 </div>    
                 ))
             )}
