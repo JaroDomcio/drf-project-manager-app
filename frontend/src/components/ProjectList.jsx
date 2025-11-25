@@ -9,9 +9,6 @@ function ProjectList() {
     const[page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const handleProjectClick = (e) => {
-        alert('Klik');
-    }
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -46,6 +43,10 @@ function ProjectList() {
         }
     }
 
+    const handleProjectClick = (id) => {
+        alert('Klik');
+    }
+
     return(
     <div className = 'project-list-box'>
         <h1>Lista projektów</h1>
@@ -58,8 +59,7 @@ function ProjectList() {
                     </h3>
                     <p className='project-description'>
                         {project.description}
-                    </p> 
-                    
+                    </p>
                 </div>    
                 ))
             ) 

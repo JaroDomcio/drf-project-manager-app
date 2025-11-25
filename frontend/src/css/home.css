@@ -34,17 +34,24 @@
     margin-bottom: 20px;    
 }
 
-.project-description {
+.project-description,
+.task-description {
     font-size: small;
     color: gray;
 } 
 
-.project-title {
+.task-description{
+    border-bottom: 1px solid #9370DB;
+}
+
+.project-title,
+.task-title {
     cursor: pointer;
     transition: transform 0.3s;
 }
 
-.project-title:hover {
+.project-title:hover,
+.task-title:hover {
     color: #9370DB;
     transform: translate(0,2px);
 }
@@ -59,7 +66,31 @@
     border: 2px solid #9370DB;
     border-radius:  10px;
     padding: 1rem 2rem;
-    max-width: 500px;
-    text-align: center;
     margin-top: 20px;
+    width: 300px;
+    height: 150px;
+}
+
+.task-todo, 
+.task-inprogress, 
+.task-done {
+    text-align: left;
+    color: #FF4500;
+    font-weight: bold;
+    font-size: small;
+}
+
+.task-inprogress {
+    color: #d8fa15;
+}
+
+.task-done {
+    color: #32CD32;
+}
+
+.task-deadline {
+    font-size: small;
+    color: gray;
+    text-align: right;
+    margin-top: 10px;
 }
