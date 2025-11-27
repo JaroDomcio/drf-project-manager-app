@@ -5,11 +5,18 @@ function TaskList() {
     const [taskList,setTaskList] = useState([])
     const [error, setError] = useState('')
 
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
     useEffect(() => {
         const fetchTasks = async () => {
             try{
-                const response = await apiClient.get('tasks/');
+                const response = await apiClient.get(`tasks/?page=${page}`);
                 setTaskList(response.data.results);
+
+                const totalPages = Math.ceil(response.data.count / 3); 
+                setTotalPages(totalPages);
+                
                 setError('');
             }
             catch(err){
@@ -18,7 +25,19 @@ function TaskList() {
             }
         };
         fetchTasks(); 
-    }, []);
+    }, [page]);
+
+    const handleChangeToNextPage = () => {
+        if (page < totalPages){
+            setPage(page + 1);
+        }
+    }
+
+    const handleChangeToPreviousPage = () => {
+        if (page > 1){
+            setPage(page - 1);
+        }
+    }
 
     const handleTaskClick = (id) => {
         alert('Clicked task');
@@ -51,6 +70,19 @@ function TaskList() {
                     ))
                 )} 
             </div>
+            {totalPages > 1 ? (
+                <div className='pagination-buttons'>
+                    <button onClick={handleChangeToPreviousPage} disabled={page === 1}>
+                        Poprzednia
+                    </button>
+                
+                    <span> Strona {page} z {totalPages} </span>
+                
+                    <button onClick={handleChangeToNextPage} disabled={page === totalPages}>
+                        Następna
+                    </button>
+                </div>
+            ) : (null)}
         </div>
     );
 }

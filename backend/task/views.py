@@ -7,6 +7,10 @@ from django.db.models import Q
 from rest_framework.decorators import action
 from user.permissions import IsManager
 from task.permissions import IsTaskOwner
+from rest_framework.pagination import PageNumberPagination
+
+class TaskPagination(PageNumberPagination):
+        page_size = 3
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
@@ -16,6 +20,8 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_fields = ['status', 'assigned_to', 'project']
     search_fields = ['title', 'description']
     ordering_fields = ['deadline', 'status', 'title']
+
+    pagination_class = TaskPagination
 
     def get_permissions(self):
         if self.action in ['create','destroy']:
