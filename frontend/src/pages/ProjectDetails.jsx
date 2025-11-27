@@ -10,13 +10,13 @@ function ProjectDetails() {
     useEffect(() => {
         const fetchProjectDetails = async () => {
             try {
-                const response = await apiClient.get(`/projects/${projectId}`);
+                const response = await apiClient.get(`/projects/${projectId}/`);
                 setProject(response.data);
             } catch (error) {
                 console.error("Error fetching project details:", error);
             }
-            fetchProjectDetails
         }
+        fetchProjectDetails();
     },[projectId])
     
     if (!project) {
