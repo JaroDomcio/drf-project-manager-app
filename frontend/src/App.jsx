@@ -4,6 +4,7 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Layout from './components/Layout.jsx';
+import ProjectDetails from './pages/ProjectDetails.jsx';
 
 function App() {  
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route element = {<ProtectedRoute/>}>
             <Route element = {<Layout/>}>
               <Route path="/" element={<Home />} />
+              <Route path="/projects/:projectId" element={<ProjectDetails/>} />
             </Route>
           </Route>
 

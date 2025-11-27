@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import apiClient from '../api/apiClient';
 import  '../css/pagination.css';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectList() {
     const [projectList,setProjectList] = useState([])
@@ -9,6 +10,7 @@ function ProjectList() {
     const[page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -44,7 +46,7 @@ function ProjectList() {
     }
 
     const handleProjectClick = (id) => {
-        alert('Klik');
+        navigate(`/projects/${id}`);
     }
 
     return(
