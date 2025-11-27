@@ -52,8 +52,8 @@ function ProjectList() {
         <h1>Lista projektów</h1>
         {projectList.length== 0 ? ("Brak projektów") : 
             (
-            projectList.map((project, index) => (
-                <div className='project-list-box-item' key = {project.id || index}>
+            projectList.map((project) => (
+                <div className='project-list-box-item' key = {project.id}>
                     <h3 onClick={() => handleProjectClick(project.id)} className='project-title'>
                         {project.title}
                     </h3>

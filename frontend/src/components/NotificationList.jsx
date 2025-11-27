@@ -12,7 +12,6 @@ function NotificationList() {
             try {
                 const response = await apiClient.get('notifications/');
                 setNotifications(response.data.results);
-
                 setError('');
             }catch (error) {
                 console.error('Błąd pobierania powiadomień', error);
@@ -32,6 +31,28 @@ function NotificationList() {
         });
     };
 
+    const markNotificationAsRead = async (id) => {
+        const notification = notifications.find((n) => n.id === id);
+
+        if (notification.is_read){
+            return; 
+        }        
+
+        setNotifications((prevNotifications) => 
+            prevNotifications.map((notification) => 
+                notification.id === id 
+                ? {...notification, is_read: true} 
+                : notification
+            )
+        );
+
+        try {
+            await apiClient.patch(`notifications/${id}/`, {is_read: true});
+        } catch (error) {
+            console.error('Error updating notification status', error);
+        }
+    };
+
 
 return (
     <div className='notification-list-box'> 
@@ -40,8 +61,8 @@ return (
             <p>Brak powiadomień</p> 
             ) : 
             (
-                notifications.map((notification, index) => (
-                <div className='notification-list-box-item' key={notification.id || index}>
+                notifications.map((notification) => (
+                <div className='notification-list-box-item' key={notification.id} onMouseEnter = {() => markNotificationAsRead(notification.id)}>
                     
                     <div className="notification-content">
                         <h3 className='notification-body'>
@@ -53,10 +74,7 @@ return (
 
                     </div>
                     <div 
-                        className="status-dot"
-                        style={{
-                            backgroundColor: notification.is_read ? '#32CD32' : '#FF4500' 
-                        }}
+                        className={`status-dot ${notification.is_read ? 'status-dot-read' : 'status-dot-unread'}`}
                     />
                     
                 </div>    

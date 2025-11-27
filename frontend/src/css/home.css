@@ -128,7 +128,9 @@
     text-align: right;
 }
 
-.status-dot {
+.status-dot,
+.status-dot-read,
+.status-dot-unread {
     width: 12px;
     height: 12px;
     border-radius: 50%; 
@@ -139,3 +141,10 @@
     margin-left: 10px;
 }
 
+.status-dot-read {
+    background-color: #32CD32; 
+}
+
+.status-dot-unread {
+    background-color: #FF4500; 
+}
