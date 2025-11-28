@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 
 import rest_framework.permissions
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,6 +150,12 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+}
+
+SIMPLE_JWT = {    
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7), 
+    'ROTATE_REFRESH_TOKENS': True,                  
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 SPECTACULAR_SETTINGS = {
