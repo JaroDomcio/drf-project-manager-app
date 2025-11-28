@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import apiClient from "../api/apiClient";
-
+import '../css/ProjectDetails.css'
 
 function ProjectDetails() {
     const {projectId} = useParams();
@@ -24,8 +24,23 @@ function ProjectDetails() {
     }
 
     return (
-    <div className="project-details-cointainer"> 
-        
+    <div className='project-details-container'> 
+        <div className='project-details-box'>
+            <h1 className='project-detail-title'>{project.title}</h1>
+            <div className='project-details-content'>
+                <div className='project-details-members'>
+                    <h3>Członkowie</h3>
+                </div>
+                <div className='project-details-description'> 
+                    {project.description}
+                </div>
+            
+                <div className='project-details-chat'>
+                    <h3>Chat</h3>
+                </div>  
+
+            </div>
+        </div>
     </div>
 )
 };
