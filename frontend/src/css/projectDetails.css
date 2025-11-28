@@ -41,11 +41,38 @@
 
 .project-details-description {
     grid-column: 2;
-    margin-top: 20px;
-    margin-left: 30px;
+    text-align: center;
 }
 
 .project-details-chat {
     grid-column: 3;
     text-align: center;
+}
+
+.project-details-members{
+    border: 1px solid #9370DB;
+    border-radius: 10px; 
+    padding-bottom: 10px;
+}
+
+.member-list{
+
+    border-bottom: 1px solid #9370DB;
+    width: 50%;
+    
+    margin: 0 auto; 
+    padding-bottom: 5px; 
+    margin-bottom: 15px;  
+}
+
+
+
+.member-list-name{
+    cursor: pointer;
+    transition: transform 0.3s;   
+}
+
+.member-list-name:hover {
+    color: #9370DB;
+    transform: translate(0,2px);
 }
