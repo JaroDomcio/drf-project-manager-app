@@ -49,6 +49,8 @@
     text-align: center;
 }
 
+
+/* Members */
 .project-details-members{
     border: 1px solid #9370DB;
     border-radius: 10px; 
@@ -75,4 +77,42 @@
 .member-list-name:hover {
     color: #9370DB;
     transform: translate(0,2px);
+}
+
+/* Options */
+
+.project-details-options-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px; 
+
+    border: 2px solid #9370DB;
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    
+    min-width: 200px;
+    height: fit-content;
+}
+.project-details-option {
+    margin: 5px 0;
+    padding: 10px 15px;
+    
+    color: #555;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.project-details-option:hover {
+    background-color: #f3e5f5;
+    color: #9370DB;
+    transform: translateX(5px);
+}
+
+
+.project-details-option.active {
+    background-color: #9370DB;
+    color: white;
 }

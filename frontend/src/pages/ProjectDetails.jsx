@@ -27,9 +27,21 @@ function ProjectDetails() {
         return <div>Ten projekt nie istnieje</div>;
     }
 
+    const handleTasksClick = () => {
+        alert('Task click')
+    }
+
+    const handleStatsClick = () => {
+        alert('stats click')
+    }
+
 
     return (
-    <div className='project-details-container'> 
+    <div className='project-details-container'>
+        <div className="project-details-options-container">
+            <p className="project-details-option" onClick = { () => handleTasksClick()}  >Moje zadania</p>
+            <p className="project-details-option" onClick = { () => handleStatsClick()} >Statystyki</p>
+        </div>
         <div className='project-details-box'>
             <h1 className='project-detail-title'>{project.title}</h1>
             <div className='project-details-content'>
