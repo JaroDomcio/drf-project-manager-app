@@ -7,7 +7,8 @@ import Modal from '../components/Modal.jsx'
 function ProjectDetails() {
     const {projectId} = useParams();
     const [project, setProject] = useState(null);
-    const [members,setMembers] = useState(null);
+    const [members, setMembers] = useState(null);
+    const [statistics, setStatistics] = useState(null);
 
     const [isMyTasksOpen, setMyTasksOpen] = useState(false);
     const [isStatisticsOpen, setStatisticsOpen] = useState(false)
@@ -26,18 +27,31 @@ function ProjectDetails() {
         }
         fetchProjectDetails();
     },[projectId])
-    
-    if (!project) {
-        return <div>Ten projekt nie istnieje</div>;
-    }
 
     // const handleTasks = () => {
     //     alert('Task click')
     // }
 
-    // const handleStats = () => {
-    //     alert('stats click')
-    // }
+    const handleStats = async () => {
+        try{
+            const ProjectStatistics = await apiClient.get(`/projects/${projectId}/tasks-status`)
+
+            setStatistics(ProjectStatistics.data)
+        } catch(error) {
+            console.error("Error fetching project statistics",error);
+
+        }
+    }
+
+    useEffect(() => {
+        if (isStatisticsOpen){
+            handleStats();
+        }
+    },[isStatisticsOpen])
+
+    if (!project) {
+        return <div>Ten projekt nie istnieje</div>;
+    }
 
 
     return (
@@ -83,7 +97,17 @@ function ProjectDetails() {
     </Modal>
 
     <Modal isOpen ={isStatisticsOpen} onClose={() => setStatisticsOpen(false)}>
-        
+        <h2>Statystyki Projektu</h2>
+            {statistics ? (
+                <div>
+                    <p><strong>Do zrobienia:</strong> {statistics.tasks_todo}</p>
+                    <p><strong>W trakcie:</strong> {statistics.tasks_in_progress || 0}</p>
+                    <p><strong>Zakończone:</strong> {statistics.done_tasks}</p>
+                    <p><strong>Razem:</strong> {statistics.total_number_of_tasks}</p>
+                </div>
+            ) : (
+                <p>Ładowanie statystyk...</p>
+            )}
     </Modal>
     </div>
 )
