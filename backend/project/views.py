@@ -7,6 +7,8 @@ from .serializers import ProjectSerializer, ProjectListSerializer
 from user.serializers import UserSerializer
 from rest_framework.decorators import action
 from user.permissions import IsManager
+from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework.pagination import PageNumberPagination
 
 class ProjectPagination(PageNumberPagination):
@@ -18,7 +20,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     lookup_field = "id"
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['owner', 'members']
     search_fields = ['title', 'description']
     ordering_fields = ['title']

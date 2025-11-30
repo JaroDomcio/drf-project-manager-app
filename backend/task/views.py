@@ -8,6 +8,7 @@ from rest_framework.decorators import action
 from user.permissions import IsManager
 from task.permissions import IsTaskOwner
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
 
 class TaskPagination(PageNumberPagination):
         page_size = 3
@@ -16,7 +17,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     lookup_field = "id"
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['status', 'assigned_to', 'project']
     search_fields = ['title', 'description']
     ordering_fields = ['deadline', 'status', 'title']

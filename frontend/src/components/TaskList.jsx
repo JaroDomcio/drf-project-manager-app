@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
 import apiClient from '../api/apiClient';
 
-function TaskList() {
-    const [taskList,setTaskList] = useState([])
+function TaskList({ projectId = null }) {
+    const [taskList, setTaskList] = useState([])
     const [error, setError] = useState('')
 
     const [page, setPage] = useState(1);
@@ -11,12 +11,20 @@ function TaskList() {
     useEffect(() => {
         const fetchTasks = async () => {
             try{
-                const response = await apiClient.get(`tasks/?page=${page}`);
+                let url = `tasks/?page=${page}`;
+
+                if (projectId) {
+                    url += `&project=${projectId}`;
+                }
+
+                const response = await apiClient.get(url);
                 setTaskList(response.data.results);
 
-                const totalPages = Math.ceil(response.data.count / 3); 
-                setTotalPages(totalPages);
-                
+                if (response.data.count) {
+                    const totalPages = Math.ceil(response.data.count / 3); 
+                    setTotalPages(totalPages);
+                }
+
                 setError('');
             }
             catch(err){
@@ -25,7 +33,8 @@ function TaskList() {
             }
         };
         fetchTasks(); 
-    }, [page]);
+
+    }, [page, projectId]);
 
     const handleChangeToNextPage = () => {
         if (page < totalPages){
@@ -45,9 +54,10 @@ function TaskList() {
 
     return (
         <div className='task-list-box'> 
-            <h1>Twoje zadania</h1>
+            <h1>{projectId ? "Zadania w projekcie" : "Twoje zadania"}</h1>
+            
             <div>
-                {taskList.length === 0 ? ("No tasks available") : ( 
+                {taskList.length === 0 ? ("Brak zadań") : ( 
                     taskList.map((task) => (
                         <div key={task.id} className = 'task-list-item'>
                             {task.status === 'TO_DO' ? ( <div className='task-todo'>Do zrobienia</div> ) : 

@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import apiClient from "../api/apiClient";
 import '../css/ProjectDetails.css'
 import Modal from '../components/Modal.jsx'
+import TaskList from "../components/TaskList.jsx";
 
 function ProjectDetails() {
     const {projectId} = useParams();
@@ -78,7 +79,7 @@ function ProjectDetails() {
                                 )
                             )
                         }
-                    </div>
+                    </div>  
 
                 </div>
                 <div className='project-details-description'> 
@@ -92,10 +93,13 @@ function ProjectDetails() {
 
             </div>
         </div>
+
+    {/* Tasks */}
     <Modal isOpen ={isMyTasksOpen} onClose={() => setMyTasksOpen(false)}>
-        
+        <TaskList projectId={projectId}/>
     </Modal>
 
+    {/* Statistics */}
     <Modal isOpen ={isStatisticsOpen} onClose={() => setStatisticsOpen(false)}>
         <h2>Statystyki Projektu</h2>
             {statistics ? (
