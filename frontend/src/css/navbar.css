@@ -1,45 +1,45 @@
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    background-color: #9370DB;
-    margin: auto;
-    align-items: center;
-    padding: 1rem 2rem;
-    border-radius: 22px;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #9370db;
+  margin: auto;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 22px;
 }
 
 .navbar button {
-    border-radius: 22px;
-    border: 2px solid #9370DB;
-    font-size: medium;
-    color: white;
-    background-color: crimson;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.3s;
-    box-shadow: 0 2px 8px rgba(52,73,94,0.08);
+  border-radius: 22px;
+  border: 2px solid #9370db;
+  font-size: medium;
+  color: white;
+  background-color: crimson;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 8px rgba(52, 73, 94, 0.08);
 }
 
-.navbar button:hover{
-    background-color: darkred;
-    transform: translate(0,2px);
+.navbar button:hover {
+  background-color: darkred;
+  transform: translate(0, 2px);
 }
 
-.navbar a{
-    text-decoration: none;
-    color: white;
-    font-size: large;
-    font-weight: bold;
-    transition: transform 0.3s;
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  transition: transform 0.3s;
 }
 
-.navbar a:hover{
-    transform: translate(0, 5px);
-    color:aliceblue;
+.navbar a:hover {
+  transform: translate(0, 5px);
+  color: aliceblue;
 }
 
-.navbar span{
-    color: white;
-    font-size: large;
-    font-weight: bold;
+.navbar span {
+  color: white;
+  font-size: large;
+  font-weight: bold;
 }

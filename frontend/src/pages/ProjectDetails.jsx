@@ -4,6 +4,7 @@ import apiClient from "../api/apiClient";
 import '../css/ProjectDetails.css'
 import Modal from '../components/Modal.jsx'
 import TaskList from "../components/TaskList.jsx";
+import TaskDetails from "../components/TaskDetails.jsx";
 
 function ProjectDetails() {
     const {projectId} = useParams();
@@ -11,8 +12,8 @@ function ProjectDetails() {
     const [members, setMembers] = useState(null);
     const [statistics, setStatistics] = useState(null);
 
-    const [isMyTasksOpen, setMyTasksOpen] = useState(false);
-    const [isStatisticsOpen, setStatisticsOpen] = useState(false)
+    const [activeModal, setActiveModal] = useState(null); // 'tasks', 'stats', 'taskDetails'
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
 
     useEffect(() => {
         const fetchProjectDetails = async () => {
@@ -29,26 +30,24 @@ function ProjectDetails() {
         fetchProjectDetails();
     },[projectId])
 
-    // const handleTasks = () => {
-    //     alert('Task click')
-    // }
-
-    const handleStats = async () => {
-        try{
-            const ProjectStatistics = await apiClient.get(`/projects/${projectId}/tasks-status`)
-
-            setStatistics(ProjectStatistics.data)
-        } catch(error) {
-            console.error("Error fetching project statistics",error);
-
-        }
-    }
 
     useEffect(() => {
-        if (isStatisticsOpen){
-            handleStats();
+        if (activeModal === 'stats'){
+            const fetchStats = async () => { 
+                try {
+                    const response = await apiClient.get(`/projects/${projectId}/tasks-status`)
+                    setStatistics(response.data)
+                } catch(error) { 
+                    console.error("Error fetching project statistics", error) }
+            };
+            fetchStats();
         }
-    },[isStatisticsOpen])
+    }, [activeModal, projectId]);
+
+    const handleTaskSelect = (taskId) => {
+        setSelectedTaskId(taskId);
+        setActiveModal('taskDetails'); 
+    }
 
     if (!project) {
         return <div>Ten projekt nie istnieje</div>;
@@ -58,8 +57,8 @@ function ProjectDetails() {
     return (
     <div className='project-details-container'>
         <div className="project-details-options-container">
-            <p className="project-details-option" onClick = { () => setMyTasksOpen(true)} >Moje zadania</p>
-            <p className="project-details-option" onClick = { () => setStatisticsOpen(true)} >Statystyki</p>
+            <p className="project-details-option" onClick = { () => setActiveModal('tasks')} >Moje zadania</p>
+            <p className="project-details-option" onClick = { () => setActiveModal('stats')} >Statystyki</p>
             {/* <p className="project-details-option" onClick = { () => handleAddTask()} >Dodaj zadanie</p>
             <p className="project-details-option" onClick = { () => handleAddMember()} >Dodaj członka</p> */}
         </div>
@@ -95,12 +94,18 @@ function ProjectDetails() {
         </div>
 
     {/* Tasks */}
-    <Modal isOpen ={isMyTasksOpen} onClose={() => setMyTasksOpen(false)}>
-        <TaskList projectId={projectId}/>
+    <Modal isOpen ={activeModal === 'tasks'} onClose={() => setActiveModal(null)}>
+        <TaskList projectId={projectId} onTaskClick={handleTaskSelect}/>
+    </Modal>
+
+    {/* Task Details */}
+    <Modal isOpen ={activeModal === 'taskDetails'} onClose={() => setActiveModal(null)}>
+        <TaskDetails taskId={selectedTaskId} />
+        <button onClick={() => setActiveModal('tasks')}>Wróć do listy</button>
     </Modal>
 
     {/* Statistics */}
-    <Modal isOpen ={isStatisticsOpen} onClose={() => setStatisticsOpen(false)}>
+    <Modal isOpen ={activeModal === 'stats'} onClose={() => setActiveModal(null)}>
         <h2>Statystyki Projektu</h2>
             {statistics ? (
                 <div>
