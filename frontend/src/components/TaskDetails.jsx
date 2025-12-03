@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../api/apiClient';
+import '/src/css/taskDetails.css';
 
 function TaskDetails({ taskId }) {
   const [task, setTask] = useState(null);
@@ -20,12 +21,34 @@ function TaskDetails({ taskId }) {
 
   if (!task) return <div>Ładowanie...</div>;
 
-  return (
+return (
     <div className="task-details-container">
-      <h2>{task.title}</h2>
-      <p>{task.description}</p>
-      <p>Status: {task.status}</p>
-      <p>Termin: {task.deadline}</p>
+      
+      <div className="task-info-section">
+        <h2>{task.title}</h2>
+        
+        <div style={{margin: '20px 0'}}>
+            <p><strong>Opis:</strong></p>
+            <p>{task.description}</p>
+        </div>
+
+        <p><strong>Status:</strong> {task.status}</p>
+        <p><strong>Termin:</strong> {task.deadline || "Brak"}</p>
+      </div>
+
+      <div className="task-comments-section">
+        <h3>Komentarze</h3>
+
+      <textarea 
+          placeholder="Dodaj komentarz..." 
+          className="task-comment-input"
+      />
+      
+      <button className="task-comment-submit-btn">
+          Wyślij
+</button>
+      </div>
+
     </div>
   );
 }
