@@ -7,6 +7,7 @@ function TaskDetails({ taskId }) {
   const [task, setTask] = useState(null);
   const [comments, setComments] = useState([]);
 
+  const [commentContent, setCommentContent] = useState('');
 
   useEffect(() => {
     if (!taskId) return;
@@ -26,9 +27,19 @@ function TaskDetails({ taskId }) {
     fetchTaskDetails();
   }, [taskId]);
 
-  const getAuthorName = (id) => {
-    const user = comments.find(comment => comment.id === id);
-  }
+  const handleSendComment = async () => {
+    try {
+      await apiClient.post('/comments/', {
+        task: taskId,
+        content: commentContent,
+      });
+      setCommentContent('');
+      // fetchTaskDetails();
+    } catch (error) {
+      console.error('Error sending comment:', error);
+    }
+  };
+
 
   if (!task) return <div>Ładowanie...</div>;
 
@@ -63,9 +74,11 @@ return (
       <textarea 
           placeholder="Dodaj komentarz..." 
           className="task-comment-input"
+          value ={commentContent}
+          onChange={(e) => setCommentContent(e.target.value)}
       />
 
-      <button className="task-comment-submit-btn">
+      <button className="task-comment-submit-btn" onClick = {handleSendComment}>
           Wyślij
       </button>
       </div>
