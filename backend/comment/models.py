@@ -10,3 +10,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+    
+    # @property
+    # def author_name(self):
+    #     return self.author.username

@@ -25,6 +25,11 @@
     overflow-y: auto;
 }
 
+.task-comment {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
 
 .task-details-container h2,
 .task-details-container h3 {

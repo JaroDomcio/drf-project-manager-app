@@ -3,12 +3,13 @@ from rest_framework import viewsets, permissions, filters
 from .models import Comment
 from .serializers import CommentSerializer
 from .permissions import IsCommentOwner
+from django_filters.rest_framework import DjangoFilterBackend
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     lookup_field = "id"
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend ,filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['task', 'author']
     search_fields = ['content']
     ordering_fields = ['created_at']
