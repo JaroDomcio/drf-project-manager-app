@@ -9,6 +9,15 @@ function TaskDetails({ taskId }) {
 
   const [commentContent, setCommentContent] = useState('');
 
+  const fetchComments = async () => {
+    try {
+      const commentsResponse = await apiClient.get(`/comments/?task=${taskId}`);
+      setComments(commentsResponse.data.results);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+
   useEffect(() => {
     if (!taskId) return;
 
@@ -16,15 +25,13 @@ function TaskDetails({ taskId }) {
       try {
         const response = await apiClient.get(`/tasks/${taskId}/`);
         setTask(response.data);
-        
-        const commentsResponse = await apiClient.get(`/comments/?task=${taskId}`);
-        setComments(commentsResponse.data.results);
 
       } catch (error) {
         console.error('Error fetching task details:', error);
       }
     };
     fetchTaskDetails();
+    fetchComments();
   }, [taskId]);
 
   const handleSendComment = async () => {
@@ -34,7 +41,7 @@ function TaskDetails({ taskId }) {
         content: commentContent,
       });
       setCommentContent('');
-      // fetchTaskDetails();
+      fetchComments();
     } catch (error) {
       console.error('Error sending comment:', error);
     }
