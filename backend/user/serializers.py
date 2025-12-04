@@ -2,9 +2,11 @@ from .models import *
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
+    is_manager = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id' ,'username' ,'first_name', 'last_name', 'email','password', 'role']
+        fields = ['id' ,'username' ,'first_name', 'last_name', 'email','password', 'role', 'is_manager']
         extra_kwargs = {
             'password': {'write_only': True},
             'first_name': {'required': True, 'allow_blank': False},
@@ -23,3 +25,6 @@ class UserSerializer(serializers.ModelSerializer):
             password = validated_data['password']
         )
         return user
+    
+    def get_is_manager(self,obj):
+        return getattr(obj, 'role') == 'MANAGER'

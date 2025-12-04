@@ -41,6 +41,11 @@ class UserViewSet(viewsets.ModelViewSet):
             'projects': user.get_projects_count(),
             'owned_projects': user.get_owned_projects(),
         })
+    
+    @action(detail= False, methods=['GET'], url_path='me')
+    def me(self,request):
+        serializer = self.get_serializer(request.user)
+        return Response(serializer.data)
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
